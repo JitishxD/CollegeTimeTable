@@ -1,0 +1,118 @@
+{
+  "timetable": {
+    "MONDAY": [
+      {
+        "slot": "A11",
+        "courseCode": "SST1003",
+        "courseTitle": "Professional Communication Skills for Engineers",
+        "start": "08:30",
+        "end": "10:00",
+        "venue": "AB-219"
+      },
+      {
+        "slot": "B11",
+        "courseCode": "ECE2002",
+        "courseTitle": "Digital Logic Design",
+        "start": "10:05",
+        "end": "11:35",
+        "venue": "AB-414"
+      },
+      {
+        "slot": "C11",
+        "courseCode": "MAT3002",
+        "courseTitle": "Applied Linear Algebra",
+        "start": "11:40",
+        "end": "13:10",
+        "venue": "AB-126"
+      },
+      {
+        "slot": "A14",
+        "courseCode": "CSE3001",
+        "courseTitle": "Database Management Systems",
+        "start": "14:50",
+        "end": "16:20",
+        "venue": "AB02-330"
+      },
+      {
+        "slot": "B21",
+        "courseCode": "CSE2003",
+        "courseTitle": "Computer Architecture and Organization",
+        "start": "16:25",
+        "end": "17:55",
+        "venue": "AB02-414"
+      }
+    ],
+    "TUESDAY": [
+      {
+        "slot": "D11",
+        "courseCode": "CSE3001",
+        "courseTitle": "Database Management Systems",
+        "start": "08:30",
+        "end": "10:00",
+        "venue": "AB02-330"
+      },
+      {
+        "slot": "E11",
+        "courseCode": "CSE0002",
+        "courseTitle": "Open Source Software (Linux Administration)",
+        "start": "10:05",
+        "end": "11:35",
+        "venue": "CR-018"
+      },
+      {
+        "slot": "E14",
+        "courseCode": "CSE2003",
+        "courseTitle": "Computer Architecture and Organization",
+        "start": "14:50",
+        "end": "16:20",
+        "venue": "AB02-414"
+      }
+    ],
+    "WEDNESDAY": [
+      {
+        "slot": "B12",
+        "courseCode": "ECE2002",
+        "courseTitle": "Digital Logic Design",
+        "start": "10:05",
+        "end": "11:35",
+        "venue": "AB-414"
+      },
+      {
+        "slot": "C12",
+        "courseCode": "MAT3002",
+        "courseTitle": "Applied Linear Algebra",
+        "start": "11:40",
+        "end": "13:10",
+        "venue": "AB-126"
+      }
+    ],
+    "THURSDAY": [
+      {
+        "slot": "D12",
+        "courseCode": "CSE3001",
+        "courseTitle": "Database Management Systems",
+        "start": "08:30",
+        "end": "10:00",
+        "venue": "AB02-330"
+      },
+      {
+        "slot": "E22",
+        "courseCode": "CSE2003",
+        "courseTitle": "Computer Architecture and Organization",
+        "start": "16:25",
+        "end": "17:55",
+        "venue": "AB02-414"
+      }
+    ],
+    "FRIDAY": [
+      {
+        "slot": "B13",
+        "courseCode": "ECE2002",
+        "courseTitle": "Digital Logic Design",
+        "start": "10:05",
+        "end": "11:35",
+        "venue": "AB-414"
+      }
+    ]
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "timetable": {
+    "MONDAY": [
+      {
+        "slot": "B11",
+        "courseCode": "CHY1006",
+        "courseTitle": "Environmental Sustainability",
+        "start": "10:05",
+        "end": "11:35",
+        "venue": "AB-318"
+      },
+      {
+        "slot": "C11",
+        "courseCode": "ECE3004",
+        "courseTitle": "Microprocessors and Microcontrollers",
+        "start": "11:40",
+        "end": "13:10",
+        "venue": "AB-319"
+      },
+      {
+        "slot": "B21",
+        "courseCode": "MAT3003",
+        "courseTitle": "Probability, Statistics and Reliability",
+        "start": "16:25",
+        "end": "17:55",
+        "venue": "AB-102"
+      }
+    ],
+    "TUESDAY": [
+      {
+        "slot": "F11",
+        "courseCode": "CSE4019",
+        "courseTitle": "Advanced Java Programming",
+        "start": "11:40",
+        "end": "13:10",
+        "venue": "AB02-408"
+      },
+      {
+        "slot": "E14",
+        "courseCode": "MAT3003",
+        "courseTitle": "Probability, Statistics and Reliability",
+        "start": "14:50",
+        "end": "16:20",
+        "venue": "AB-102"
+      }
+    ],
+    "WEDNESDAY": [
+      {
+        "slot": "C12",
+        "courseCode": "ECE3004",
+        "courseTitle": "Microprocessors and Microcontrollers",
+        "start": "11:40",
+        "end": "13:10",
+        "venue": "AB-319"
+      },
+      {
+        "slot": "B22",
+        "courseCode": "CSE0002",
+        "courseTitle": "Open Source Software (Linux Administration)",
+        "start": "16:25",
+        "end": "17:55",
+        "venue": "CR-018"
+      }
+    ],
+    "THURSDAY": [
+      {
+        "slot": "F12",
+        "courseCode": "CSE4019",
+        "courseTitle": "Advanced Java Programming",
+        "start": "11:40",
+        "end": "13:10",
+        "venue": "AB02-408"
+      },
+      {
+        "slot": "E22",
+        "courseCode": "MAT3003",
+        "courseTitle": "Probability, Statistics and Reliability",
+        "start": "16:25",
+        "end": "17:55",
+        "venue": "AB-102"
+      }
+    ],
+    "FRIDAY": [
+      {
+        "slot": "C13",
+        "courseCode": "ECE3004",
+        "courseTitle": "Microprocessors and Microcontrollers",
+        "start": "11:40",
+        "end": "13:10",
+        "venue": "AB-319"
+      }
+    ]
+  }
+}

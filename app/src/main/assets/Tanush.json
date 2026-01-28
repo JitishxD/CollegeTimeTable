@@ -1,0 +1,108 @@
+{
+  "timetable": {
+    "MONDAY": [
+      {
+        "slot": "A11",
+        "courseCode": "CSE3003",
+        "courseTitle": "Operating System",
+        "start": "08:30",
+        "end": "10:00",
+        "venue": "AR-202"
+      },
+      {
+        "slot": "B11",
+        "courseCode": "MAT3003",
+        "courseTitle": "Probability, Statistics and Reliability",
+        "start": "10:05",
+        "end": "11:35",
+        "venue": "AB-218"
+      },
+      {
+        "slot": "A21",
+        "courseCode": "CSD3005",
+        "courseTitle": "Data Privacy",
+        "start": "13:15",
+        "end": "14:45",
+        "venue": "AB-516"
+      },
+      {
+        "slot": "A14",
+        "courseCode": "SST2003",
+        "courseTitle": "Dynamics of Workplace Communication Skills",
+        "start": "14:50",
+        "end": "16:20",
+        "venue": "AB-107"
+      },
+      {
+        "slot": "B21",
+        "courseCode": "MAT3016",
+        "courseTitle": "Stochastic Process",
+        "start": "16:25",
+        "end": "17:55",
+        "venue": "AB-216"
+      }
+    ],
+    "WEDNESDAY": [
+      {
+        "slot": "A12",
+        "courseCode": "CSE3003",
+        "courseTitle": "Operating System",
+        "start": "08:30",
+        "end": "10:00",
+        "venue": "AR-202"
+      },
+      {
+        "slot": "B12",
+        "courseCode": "MAT3003",
+        "courseTitle": "Probability, Statistics and Reliability",
+        "start": "10:05",
+        "end": "11:35",
+        "venue": "AB-218"
+      },
+      {
+        "slot": "B22",
+        "courseCode": "CSE0002",
+        "courseTitle": "Open Source Software (Linux Administration)",
+        "start": "16:25",
+        "end": "17:55",
+        "venue": "CR-018"
+      }
+    ],
+    "THURSDAY": [
+      {
+        "slot": "D12",
+        "courseCode": "CSA3003",
+        "courseTitle": "Reinforcement Learning",
+        "start": "08:30",
+        "end": "10:00",
+        "venue": "AB02-316"
+      }
+    ],
+    "FRIDAY": [
+      {
+        "slot": "A13",
+        "courseCode": "CSE3003",
+        "courseTitle": "Operating System",
+        "start": "08:30",
+        "end": "10:00",
+        "venue": "AR-202"
+      },
+      {
+        "slot": "B13",
+        "courseCode": "MAT3003",
+        "courseTitle": "Probability, Statistics and Reliability",
+        "start": "10:05",
+        "end": "11:35",
+        "venue": "AB-218"
+      },
+      {
+        "slot": "A23",
+        "courseCode": "CSD3005",
+        "courseTitle": "Data Privacy",
+        "start": "13:15",
+        "end": "14:45",
+        "venue": "AB-516"
+      }
+    ]
+  }
+}
