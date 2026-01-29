@@ -3,6 +3,7 @@ package me.jitish.collegetimetable
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.compose.BackHandler
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -48,6 +49,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    // Handle system back button
+                    BackHandler(enabled = showFullTimetable) {
+                        showFullTimetable = false
+                    }
+
                     if (showFullTimetable && selectedPerson != null) {
                         FullTimetableScreen(
                             personName = selectedPerson.name,
