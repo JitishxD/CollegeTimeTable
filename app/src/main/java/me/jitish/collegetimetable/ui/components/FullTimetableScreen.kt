@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import me.jitish.collegetimetable.data.ClassInfo
 import me.jitish.collegetimetable.data.TimetableData
@@ -334,5 +335,215 @@ private fun getDayColor(day: String, isDarkMode: Boolean): Pair<Color, Color> {
                     else Pair(Color(0xFFEF5350), Color(0xFFEF5350).copy(alpha = 0.2f))
         else -> if (isDarkMode) Pair(MatteNightMuted, MatteNightMuted.copy(alpha = 0.2f))
                 else Pair(MatteSlate, MatteSlate.copy(alpha = 0.2f))
+    }
+}
+
+// -------- PREVIEWS --------
+
+// Sample data for previews
+private val sampleMondayClasses = listOf(
+    ClassInfo(
+        slot = "A11",
+        courseCode = "CSE1001",
+        courseTitle = "Problem Solving and Programming",
+        start = "08:00",
+        end = "09:30",
+        venue = "AB-302"
+    ),
+    ClassInfo(
+        slot = "B11",
+        courseCode = "ECE2002",
+        courseTitle = "Digital Logic Design",
+        start = "10:05",
+        end = "11:35",
+        venue = "AB-414"
+    ),
+    ClassInfo(
+        slot = "C11",
+        courseCode = "MAT3002",
+        courseTitle = "Applied Linear Algebra",
+        start = "11:40",
+        end = "13:10",
+        venue = "AB-126"
+    )
+)
+
+private val sampleTuesdayClasses = listOf(
+    ClassInfo(
+        slot = "D11",
+        courseCode = "PHY1001",
+        courseTitle = "Engineering Physics",
+        start = "14:00",
+        end = "15:30",
+        venue = "AB-118"
+    ),
+    ClassInfo(
+        slot = "E11",
+        courseCode = "ENG1001",
+        courseTitle = "Technical English",
+        start = "16:00",
+        end = "17:30",
+        venue = "AB-205"
+    )
+)
+
+private val sampleWednesdayClasses = listOf(
+    ClassInfo(
+        slot = "F11",
+        courseCode = "CHE1001",
+        courseTitle = "Engineering Chemistry",
+        start = "09:00",
+        end = "10:30",
+        venue = "AB-310"
+    )
+)
+
+private val sampleTimetable = TimetableData(
+    timetable = mapOf(
+        "MONDAY" to sampleMondayClasses,
+        "TUESDAY" to sampleTuesdayClasses,
+        "WEDNESDAY" to sampleWednesdayClasses
+    )
+)
+
+@Preview(
+    name = "Full Timetable - Light Mode",
+    showBackground = true,
+    showSystemUi = true
+)
+@Composable
+private fun FullTimetableScreenPreviewLight() {
+    CollegeTimeTableTheme(darkTheme = false) {
+        FullTimetableScreen(
+            personName = "Jitish",
+            timetable = sampleTimetable,
+            isDarkMode = false,
+            onBackClick = {}
+        )
+    }
+}
+
+@Preview(
+    name = "Full Timetable - Dark Mode",
+    showBackground = true,
+    showSystemUi = true
+)
+@Composable
+private fun FullTimetableScreenPreviewDark() {
+    CollegeTimeTableTheme(darkTheme = true) {
+        FullTimetableScreen(
+            personName = "Jitish",
+            timetable = sampleTimetable,
+            isDarkMode = true,
+            onBackClick = {}
+        )
+    }
+}
+
+@Preview(
+    name = "Full Timetable - No Data",
+    showBackground = true,
+    showSystemUi = true
+)
+@Composable
+private fun FullTimetableScreenPreviewNoData() {
+    CollegeTimeTableTheme(darkTheme = false) {
+        FullTimetableScreen(
+            personName = "Jitish",
+            timetable = null,
+            isDarkMode = false,
+            onBackClick = {}
+        )
+    }
+}
+
+@Preview(
+    name = "Day Schedule Card - Light Mode",
+    showBackground = true
+)
+@Composable
+private fun DayScheduleCardPreviewLight() {
+    CollegeTimeTableTheme(darkTheme = false) {
+        DayScheduleCard(
+            day = "MONDAY",
+            classes = sampleMondayClasses,
+            isDarkMode = false
+        )
+    }
+}
+
+@Preview(
+    name = "Day Schedule Card - Dark Mode",
+    showBackground = true,
+    backgroundColor = 0xFF1A1C1E
+)
+@Composable
+private fun DayScheduleCardPreviewDark() {
+    CollegeTimeTableTheme(darkTheme = true) {
+        DayScheduleCard(
+            day = "TUESDAY",
+            classes = sampleTuesdayClasses,
+            isDarkMode = true
+        )
+    }
+}
+
+@Preview(
+    name = "Class Item Row - Light Mode",
+    showBackground = true
+)
+@Composable
+private fun ClassItemRowPreviewLight() {
+    CollegeTimeTableTheme(darkTheme = false) {
+        ClassItemRow(
+            classInfo = sampleMondayClasses[0],
+            isDarkMode = false,
+            accentColor = MatteSageLight
+        )
+    }
+}
+
+@Preview(
+    name = "Class Item Row - Dark Mode",
+    showBackground = true,
+    backgroundColor = 0xFF1A1C1E
+)
+@Composable
+private fun ClassItemRowPreviewDark() {
+    CollegeTimeTableTheme(darkTheme = true) {
+        ClassItemRow(
+            classInfo = sampleMondayClasses[1],
+            isDarkMode = true,
+            accentColor = MatteSageDark
+        )
+    }
+}
+
+@Preview(
+    name = "View Full Timetable Button - Light Mode",
+    showBackground = true
+)
+@Composable
+private fun ViewFullTimetableButtonPreviewLight() {
+    CollegeTimeTableTheme(darkTheme = false) {
+        ViewFullTimetableButton(
+            onClick = {},
+            isDarkMode = false
+        )
+    }
+}
+
+@Preview(
+    name = "View Full Timetable Button - Dark Mode",
+    showBackground = true,
+    backgroundColor = 0xFF1A1C1E
+)
+@Composable
+private fun ViewFullTimetableButtonPreviewDark() {
+    CollegeTimeTableTheme(darkTheme = true) {
+        ViewFullTimetableButton(
+            onClick = {},
+            isDarkMode = true
+        )
     }
 }
