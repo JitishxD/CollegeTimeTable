@@ -11,6 +11,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -38,15 +41,28 @@ class MainActivity : ComponentActivity() {
             val uiState by viewModel.uiState.collectAsState()
 
             CollegeTimeTableTheme(darkTheme = uiState.isDarkMode) {
+                var showFullTimetable by remember { mutableStateOf(false) }
+                val selectedPerson = uiState.selectedPerson
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    TimetableScreen(
-                        uiState = uiState,
-                        onPersonSelected = { viewModel.selectPerson(it) },
-                        onToggleDarkMode = { viewModel.toggleDarkMode() }
-                    )
+                    if (showFullTimetable && selectedPerson != null) {
+                        FullTimetableScreen(
+                            personName = selectedPerson.name,
+                            timetable = uiState.timetable,
+                            isDarkMode = uiState.isDarkMode,
+                            onBackClick = { showFullTimetable = false }
+                        )
+                    } else {
+                        TimetableScreen(
+                            uiState = uiState,
+                            onPersonSelected = { viewModel.selectPerson(it) },
+                            onToggleDarkMode = { viewModel.toggleDarkMode() },
+                            onViewFullTimetable = { showFullTimetable = true }
+                        )
+                    }
                 }
             }
         }
@@ -59,6 +75,7 @@ fun TimetableScreen(
     uiState: TimetableUiState,
     onPersonSelected: (Person) -> Unit,
     onToggleDarkMode: () -> Unit,
+    onViewFullTimetable: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val scrollState = rememberScrollState()
@@ -132,6 +149,12 @@ fun TimetableScreen(
                 // Class Status Display
                 ClassStatusDisplay(
                     classState = uiState.classState,
+                    isDarkMode = uiState.isDarkMode
+                )
+
+                // View Full Timetable Button
+                ViewFullTimetableButton(
+                    onClick = onViewFullTimetable,
                     isDarkMode = uiState.isDarkMode
                 )
             } else {
