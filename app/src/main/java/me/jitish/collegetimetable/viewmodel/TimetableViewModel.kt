@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.jitish.collegetimetable.data.ClassInfo
 import me.jitish.collegetimetable.data.Person
@@ -39,8 +37,8 @@ data class TimetableUiState(
 
 class TimetableViewModel(private val repository: TimetableRepository) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(TimetableUiState())
-    val uiState: StateFlow<TimetableUiState> = _uiState.asStateFlow()
+    var uiState = MutableStateFlow(TimetableUiState())
+        private set
 
     private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
@@ -53,7 +51,7 @@ class TimetableViewModel(private val repository: TimetableRepository) : ViewMode
         viewModelScope.launch {
             val people = repository.getAvailablePeople()
             val savedDarkMode = repository.isDarkMode()
-            _uiState.value = _uiState.value.copy(
+            uiState.value = uiState.value.copy(
                 people = people,
                 isLoading = false,
                 isDarkMode = savedDarkMode
@@ -69,7 +67,7 @@ class TimetableViewModel(private val repository: TimetableRepository) : ViewMode
     fun selectPerson(person: Person) {
         viewModelScope.launch {
             val timetable = repository.loadTimetable(person.fileName)
-            _uiState.value = _uiState.value.copy(
+            uiState.value = uiState.value.copy(
                 selectedPerson = person,
                 timetable = timetable
             )
@@ -78,9 +76,9 @@ class TimetableViewModel(private val repository: TimetableRepository) : ViewMode
     }
 
     fun toggleDarkMode() {
-        val newDarkMode = !_uiState.value.isDarkMode
+        val newDarkMode = !uiState.value.isDarkMode
         repository.setDarkMode(newDarkMode)
-        _uiState.value = _uiState.value.copy(
+        uiState.value = uiState.value.copy(
             isDarkMode = newDarkMode
         )
     }
@@ -95,7 +93,7 @@ class TimetableViewModel(private val repository: TimetableRepository) : ViewMode
     }
 
     private fun updateClassState() {
-        val timetable = _uiState.value.timetable ?: return
+        val timetable = uiState.value.timetable ?: return
 
         val currentDay = getCurrentDayString()
         val currentTime = LocalTime.now()
@@ -148,7 +146,7 @@ class TimetableViewModel(private val repository: TimetableRepository) : ViewMode
             }
         }
 
-        _uiState.value = _uiState.value.copy(
+        uiState.value = uiState.value.copy(
             classState = ClassState(
                 currentClass = currentClass,
                 upcomingClass = upcomingClass,
