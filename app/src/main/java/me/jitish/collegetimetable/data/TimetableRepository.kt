@@ -57,8 +57,17 @@ class TimetableRepository(private val context: Context) {
         prefs.edit { putBoolean(KEY_DARK_MODE, isDark) }
     }
 
+    fun is24HourFormat(): Boolean {
+        return prefs.getBoolean(KEY_24_HOUR_FORMAT, true)
+    }
+
+    fun set24HourFormat(is24Hour: Boolean) {
+        prefs.edit { putBoolean(KEY_24_HOUR_FORMAT, is24Hour) }
+    }
+
     companion object {
         private const val PREFS_NAME = "timetable_prefs"
         private const val KEY_DARK_MODE = "dark_mode"
+        private const val KEY_24_HOUR_FORMAT = "is_24_hour_format"
     }
 }

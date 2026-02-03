@@ -31,7 +31,8 @@ fun FullTimetableScreen(
     timetable: TimetableData?,
     isDarkMode: Boolean,
     onBackClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    is24HourFormat: Boolean = true
 ) {
     val verticalScrollState = rememberScrollState()
 
@@ -99,7 +100,8 @@ fun FullTimetableScreen(
                         DayScheduleCard(
                             day = day,
                             classes = classes.sortedBy { it.start },
-                            isDarkMode = isDarkMode
+                            isDarkMode = isDarkMode,
+                            is24HourFormat = is24HourFormat
                         )
                     }
                 }
@@ -115,7 +117,8 @@ fun DayScheduleCard(
     day: String,
     classes: List<ClassInfo>,
     isDarkMode: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    is24HourFormat: Boolean = true
 ) {
     val dayColors = getDayColor(day, isDarkMode)
 
@@ -165,6 +168,7 @@ fun DayScheduleCard(
                 ClassItemRow(
                     classInfo = classInfo,
                     isDarkMode = isDarkMode,
+                    is24HourFormat = is24HourFormat,
                     accentColor = dayColors.first
                 )
 
@@ -185,7 +189,8 @@ fun ClassItemRow(
     classInfo: ClassInfo,
     isDarkMode: Boolean,
     accentColor: Color,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    is24HourFormat: Boolean = true
 ) {
     val contentColor = if (isDarkMode) MatteNightText else MatteCharcoal
 
@@ -197,17 +202,17 @@ fun ClassItemRow(
     ) {
         // Time Column
         Column(
-            modifier = Modifier.width(70.dp),
+            modifier = Modifier.width(if (is24HourFormat) 70.dp else 90.dp),
             horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = classInfo.start,
+                text = formatTime(classInfo.start, is24HourFormat),
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium,
                 color = contentColor
             )
             Text(
-                text = classInfo.end,
+                text = formatTime(classInfo.end, is24HourFormat),
                 style = MaterialTheme.typography.bodySmall,
                 color = contentColor.copy(alpha = 0.6f)
             )

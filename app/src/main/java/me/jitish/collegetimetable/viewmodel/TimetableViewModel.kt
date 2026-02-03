@@ -32,6 +32,7 @@ data class TimetableUiState(
     val timetable: TimetableData? = null,
     val classState: ClassState = ClassState(),
     val isDarkMode: Boolean = false,
+    val is24HourFormat: Boolean = true,
     val isLoading: Boolean = true
 )
 
@@ -51,10 +52,12 @@ class TimetableViewModel(private val repository: TimetableRepository) : ViewMode
         viewModelScope.launch {
             val people = repository.getAvailablePeople()
             val savedDarkMode = repository.isDarkMode()
+            val saved24HourFormat = repository.is24HourFormat()
             uiState.value = uiState.value.copy(
                 people = people,
                 isLoading = false,
-                isDarkMode = savedDarkMode
+                isDarkMode = savedDarkMode,
+                is24HourFormat = saved24HourFormat
             )
 
             // Auto-select first person if available
@@ -80,6 +83,14 @@ class TimetableViewModel(private val repository: TimetableRepository) : ViewMode
         repository.setDarkMode(newDarkMode)
         uiState.value = uiState.value.copy(
             isDarkMode = newDarkMode
+        )
+    }
+
+    fun toggle24HourFormat() {
+        val new24HourFormat = !uiState.value.is24HourFormat
+        repository.set24HourFormat(new24HourFormat)
+        uiState.value = uiState.value.copy(
+            is24HourFormat = new24HourFormat
         )
     }
 

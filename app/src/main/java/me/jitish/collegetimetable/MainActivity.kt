@@ -59,6 +59,7 @@ class MainActivity : ComponentActivity() {
                             personName = selectedPerson.name,
                             timetable = uiState.timetable,
                             isDarkMode = uiState.isDarkMode,
+                            is24HourFormat = uiState.is24HourFormat,
                             onBackClick = { showFullTimetable = false }
                         )
                     } else {
@@ -66,6 +67,7 @@ class MainActivity : ComponentActivity() {
                             uiState = uiState,
                             onPersonSelected = { viewModel.selectPerson(it) },
                             onToggleDarkMode = { viewModel.toggleDarkMode() },
+                            onToggle24HourFormat = { viewModel.toggle24HourFormat() },
                             onViewFullTimetable = { showFullTimetable = true }
                         )
                     }
@@ -81,10 +83,21 @@ fun TimetableScreen(
     uiState: TimetableUiState,
     onPersonSelected: (Person) -> Unit,
     onToggleDarkMode: () -> Unit,
-    onViewFullTimetable: () -> Unit = {},
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onToggle24HourFormat: () -> Unit = {},
+    onViewFullTimetable: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
+    var showSettingsDialog by remember { mutableStateOf(false) }
+
+    // Settings Dialog
+    SettingsDialog(
+        showDialog = showSettingsDialog,
+        onDismiss = { showSettingsDialog = false },
+        is24HourFormat = uiState.is24HourFormat,
+        onToggle24HourFormat = onToggle24HourFormat,
+        isDarkMode = uiState.isDarkMode
+    )
 
     Scaffold(
         topBar = {
@@ -104,6 +117,11 @@ fun TimetableScreen(
                     }
                 },
                 actions = {
+                    SettingsButton(
+                        onClick = { showSettingsDialog = true },
+                        isDarkMode = uiState.isDarkMode
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
                     ThemeToggleButton(
                         isDarkMode = uiState.isDarkMode,
                         onToggle = onToggleDarkMode
@@ -155,7 +173,8 @@ fun TimetableScreen(
                 // Class Status Display
                 ClassStatusDisplay(
                     classState = uiState.classState,
-                    isDarkMode = uiState.isDarkMode
+                    isDarkMode = uiState.isDarkMode,
+                    is24HourFormat = uiState.is24HourFormat
                 )
 
                 // View Full Timetable Button

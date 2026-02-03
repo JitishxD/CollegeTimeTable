@@ -7,9 +7,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Nightlight
-import androidx.compose.material.icons.outlined.WbSunny
 import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material.icons.outlined.Schedule
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.WbSunny
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,6 +26,30 @@ import me.jitish.collegetimetable.data.Person
 import me.jitish.collegetimetable.ui.theme.*
 import me.jitish.collegetimetable.viewmodel.ClassState
 import java.util.Locale
+
+/**
+ * Utility function to format time string based on user preference.
+ * Converts "HH:mm" format to "hh:mm a" format when is24HourFormat is false.
+ */
+fun formatTime(time: String, is24HourFormat: Boolean): String {
+    if (is24HourFormat) return time
+
+    return try {
+        val parts = time.split(":")
+        val hour = parts[0].toInt()
+        val minute = parts[1]
+
+        val period = if (hour < 12) "AM" else "PM"
+        val hour12 = when {
+            hour == 0 -> 12
+            hour > 12 -> hour - 12
+            else -> hour
+        }
+        String.format(Locale.US, "%d:%s %s", hour12, minute, period)
+    } catch (_: Exception) {
+        time // Return original if parsing fails
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,7 +80,7 @@ fun PersonDropdown(
             ),
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier
-                .menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
+                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, true)
                 .fillMaxWidth()
         )
 
@@ -112,11 +137,102 @@ fun ThemeToggleButton(
 }
 
 @Composable
+fun SettingsButton(
+    onClick: () -> Unit,
+    isDarkMode: Boolean,
+    modifier: Modifier = Modifier
+) {
+    val iconColor by animateColorAsState(
+        targetValue = if (isDarkMode) MatteTaupeLight else MatteSlate,
+        animationSpec = tween(250),
+        label = "settingsIconColor"
+    )
+
+    IconButton(
+        onClick = onClick,
+        modifier = modifier
+            .size(44.dp)
+            .clip(RoundedCornerShape(12.dp))
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Settings,
+            contentDescription = "Settings",
+            tint = iconColor,
+            modifier = Modifier.size(22.dp)
+        )
+    }
+}
+
+@Composable
+fun SettingsDialog(
+    showDialog: Boolean,
+    onDismiss: () -> Unit,
+    is24HourFormat: Boolean,
+    onToggle24HourFormat: () -> Unit,
+    isDarkMode: Boolean
+) {
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = onDismiss,
+            title = {
+                Text(
+                    text = "Settings",
+                    fontWeight = FontWeight.Medium
+                )
+            },
+            text = {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    // Time Format Toggle
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column {
+                            Text(
+                                text = "Time Format",
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = FontWeight.Medium
+                            )
+                            Text(
+                                text = if (is24HourFormat) "24-hour (14:30)" else "12-hour (2:30 PM)",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Switch(
+                            checked = is24HourFormat,
+                            onCheckedChange = { onToggle24HourFormat() },
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = if (isDarkMode) MatteSageDark else MatteSageLight,
+                                checkedTrackColor = if (isDarkMode) MatteSageDark.copy(alpha = 0.3f) else MatteSageLight.copy(alpha = 0.3f)
+                            )
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = onDismiss) {
+                    Text("Done")
+                }
+            },
+            containerColor = if (isDarkMode) MatteNightCard else MatteCream,
+            shape = RoundedCornerShape(16.dp)
+        )
+    }
+}
+
+@Composable
 fun CurrentClassCard(
     classInfo: ClassInfo,
     timeRemaining: Long,
     isDarkMode: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    is24HourFormat: Boolean = true
 ) {
     val cardColor = if (isDarkMode) 
         Color(0xFF2A3A2A)
@@ -203,7 +319,7 @@ fun CurrentClassCard(
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
-                        text = "${classInfo.start} - ${classInfo.end}",
+                        text = "${formatTime(classInfo.start, is24HourFormat)} - ${formatTime(classInfo.end, is24HourFormat)}",
                         color = contentColor.copy(alpha = 0.85f),
                         style = MaterialTheme.typography.bodyMedium
                     )
@@ -243,7 +359,8 @@ fun UpcomingClassCard(
     classInfo: ClassInfo,
     startsIn: Long,
     isDarkMode: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    is24HourFormat: Boolean = true
 ) {
     val cardColor = if (isDarkMode) 
         Color(0xFF2A3340)
@@ -330,7 +447,7 @@ fun UpcomingClassCard(
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
-                        text = "${classInfo.start} - ${classInfo.end}",
+                        text = "${formatTime(classInfo.start, is24HourFormat)} - ${formatTime(classInfo.end, is24HourFormat)}",
                         color = contentColor.copy(alpha = 0.85f),
                         style = MaterialTheme.typography.bodyMedium
                     )
@@ -471,7 +588,8 @@ fun NoClassCard(
 fun RemainingClassItem(
     classInfo: ClassInfo,
     isDarkMode: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    is24HourFormat: Boolean = true
 ) {
     val cardColor = if (isDarkMode) MatteNightCard else MatteStone.copy(alpha = 0.5f)
     val contentColor = if (isDarkMode) MatteNightText else MatteCharcoal
@@ -501,7 +619,7 @@ fun RemainingClassItem(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Text(
-                        text = "${classInfo.start} - ${classInfo.end}",
+                        text = "${formatTime(classInfo.start, is24HourFormat)} - ${formatTime(classInfo.end, is24HourFormat)}",
                         style = MaterialTheme.typography.bodySmall,
                         color = mutedColor
                     )
@@ -531,7 +649,8 @@ fun RemainingClassItem(
 fun RemainingClassesSection(
     remainingClasses: List<ClassInfo>,
     isDarkMode: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    is24HourFormat: Boolean = true
 ) {
     val contentColor = if (isDarkMode) MatteNightText else MatteCharcoal
 
@@ -549,7 +668,8 @@ fun RemainingClassesSection(
         remainingClasses.forEach { classInfo ->
             RemainingClassItem(
                 classInfo = classInfo,
-                isDarkMode = isDarkMode
+                isDarkMode = isDarkMode,
+                is24HourFormat = is24HourFormat
             )
         }
     }
@@ -559,7 +679,8 @@ fun RemainingClassesSection(
 fun ClassStatusDisplay(
     classState: ClassState,
     isDarkMode: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    is24HourFormat: Boolean = true
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
@@ -572,14 +693,16 @@ fun ClassStatusDisplay(
                 CurrentClassCard(
                     classInfo = classState.currentClass,
                     timeRemaining = classState.currentClassTimeRemaining,
-                    isDarkMode = isDarkMode
+                    isDarkMode = isDarkMode,
+                    is24HourFormat = is24HourFormat
                 )
                 // Show upcoming class if exists (when current class is running)
                 classState.upcomingClass?.let { upcoming ->
                     UpcomingClassCard(
                         classInfo = upcoming,
                         startsIn = classState.upcomingClassStartsIn,
-                        isDarkMode = isDarkMode
+                        isDarkMode = isDarkMode,
+                        is24HourFormat = is24HourFormat
                     )
                 }
             }
@@ -588,7 +711,8 @@ fun ClassStatusDisplay(
                 UpcomingClassCard(
                     classInfo = classState.upcomingClass,
                     startsIn = classState.upcomingClassStartsIn,
-                    isDarkMode = isDarkMode
+                    isDarkMode = isDarkMode,
+                    is24HourFormat = is24HourFormat
                 )
             }
             // No classes at all
@@ -604,7 +728,8 @@ fun ClassStatusDisplay(
         if (classState.remainingClasses.isNotEmpty()) {
             RemainingClassesSection(
                 remainingClasses = classState.remainingClasses,
-                isDarkMode = isDarkMode
+                isDarkMode = isDarkMode,
+                is24HourFormat = is24HourFormat
             )
         }
     }
