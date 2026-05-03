@@ -2,78 +2,50 @@ package me.jitish.collegetimetable.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// -------- MATTE DESIGN PALETTE --------
+// -------- APP DESIGN PALETTE --------
 
-// --- Neutral Base Colors (Light Theme) ---
-val MatteWhite = Color(0xFFFAFAF9)           // background
-val MatteCream = Color(0xFFF5F4F0)           // Soft cream surface
-val MatteStone = Color(0xFFE8E6E1)           // Light stone for cards
-val MattePebble = Color(0xFFD4D2CD)          // Subtle borders/dividers
-val MatteSlate = Color(0xFF9C9A94)           // Muted text secondary
-val MatteCharcoal = Color(0xFF52504A)        // Primary text light mode
+// Neutral base colors - light theme
+val AppCanvasLight = Color(0xFFFBFCFF)
+val AppSurfaceLight = Color(0xFFF3F6FA)
+val AppSurfaceVariantLight = Color(0xFFE3E8F2)
+val AppOutlineLight = Color(0xFFCBD5E1)
+val AppTextMutedLight = Color(0xFF64748B)
+val AppTextStrongLight = Color(0xFF1F2937)
 
-// --- Neutral Base Colors (Dark Theme) ---
-val MatteNightSurface = Color(0xFF1C1C1E)    // Deep charcoal background
-val MatteNightCard = Color(0xFF2C2C2E)       // Elevated surface dark
-val MatteNightBorder = Color(0xFF3A3A3C)     // Subtle borders dark
-val MatteNightMuted = Color(0xFF8E8E93)      // Secondary text dark
-val MatteNightText = Color(0xFFE5E5E7)       // Primary text dark
+// Neutral base colors - dark theme
+val AppCanvasDark = Color(0xFF111318)
+val AppSurfaceDark = Color(0xFF1D222B)
+val AppSurfaceVariantDark = Color(0xFF2A3340)
+val AppOutlineDark = Color(0xFF3B4758)
+val AppTextMutedDark = Color(0xFFA8B3C3)
+val AppTextStrongDark = Color(0xFFF1F5F9)
 
-// --- Accent Colors (Muted & Desaturated) ---
-// Sage Green
-val MatteSageLight = Color(0xFF8BA888)       // Muted sage for light mode
-val MatteSageDark = Color(0xFF9CB699)        // Slightly lighter for dark mode
-val MatteSageSubtle = Color(0xFFE8EFE7)      // Very light sage tint
+// Saturated accents
+val AppBlue = Color(0xFF2563EB)
+val AppBlueBright = Color(0xFF60A5FA)
+val AppBlueSoft = Color(0xFFEFF6FF)
+val AppBlueSoftDark = Color(0xFF172554)
+val AppBlueContainer = Color(0xFFDBEAFE)
+val AppBlueContainerDark = Color(0xFF1E3A8A)
 
-// Dusty Blue
-val MatteDustyBlueLight = Color(0xFF7A9BB5)  // Muted blue for light mode
-val MatteDustyBlueDark = Color(0xFF8FAEC4)   // Slightly lighter for dark mode
-val MatteDustyBlueSubtle = Color(0xFFE6EEF4) // Very light blue tint
+val AppGreen = Color(0xFF16A34A)
+val AppGreenBright = Color(0xFF4ADE80)
+val AppGreenSoft = Color(0xFFF0FDF4)
+val AppGreenSoftDark = Color(0xFF132E20)
+val AppGreenContainer = Color(0xFFDCFCE7)
+val AppGreenContainerDark = Color(0xFF14532D)
 
-// Warm Taupe
-val MatteTaupe = Color(0xFF9A8F85)           // Warm neutral accent
-val MatteTaupeLight = Color(0xFFBFB5AB)      // Lighter taupe
-val MatteTaupeSubtle = Color(0xFFF0ECE8)     // Very light taupe tint
+val AppAmber = Color(0xFFD97706)
+val AppAmberBright = Color(0xFFFBBF24)
+val AppAmberContainer = Color(0xFFFEF3C7)
+val AppAmberContainerDark = Color(0xFF78350F)
 
-// Soft Terracotta
-val MatteTerracotta = Color(0xFFBFA094)      // Muted terracotta
-val MatteTerracottaSubtle = Color(0xFFF5EFEB) // Very light terracotta tint
+val AppCoral = Color(0xFFE11D48)
+val AppCoralBright = Color(0xFFFB7185)
 
-// --- Legacy Color Mappings (for backward compatibility) ---
-// Light theme colors (remapped to matte palette)
-val Purple80 = MatteDustyBlueSubtle
-val PurpleGrey80 = MatteStone
-val Pink80 = MatteTerracottaSubtle
-
-val Purple40 = MatteDustyBlueLight
-val PurpleGrey40 = MatteSlate
-val Pink40 = MatteTaupe
-
-// Dark theme base colors
-val MidnightBlue = MatteNightSurface
-val MidnightBlueDark = MatteNightCard
-val MidnightBlueLight = MatteNightBorder
-val MidnightAccent = MatteDustyBlueDark
-val MidnightSurface = MatteNightCard
-val MidnightSurfaceVariant = MatteNightBorder
-
-// App-specific colors - Light mode
-val CurrentClassGreen = MatteSageLight
-val UpcomingClassBlue = MatteDustyBlueLight
-val CardBackgroundLight = MatteCream
-
-// App-specific colors - Dark mode
-val CurrentClassGreenDark = MatteSageDark
-val UpcomingClassBlueDark = MatteDustyBlueDark
-val CardBackgroundDark = MatteNightCard
-
-// --- Text Colors ---
-val TextPrimaryLight = MatteCharcoal
-val TextSecondaryLight = MatteSlate
-val TextPrimaryDark = MatteNightText
-val TextSecondaryDark = MatteNightMuted
-
-// --- Shadow & Overlay Colors ---
-val SoftShadow = Color(0x0A000000)           // Very subtle shadow (4% opacity)
-val MediumShadow = Color(0x12000000)         // Medium shadow (7% opacity)
-
+val AppPurple = Color(0xFF7C3AED)
+val AppPurpleBright = Color(0xFFA78BFA)
+val AppCyan = Color(0xFF0891B2)
+val AppCyanBright = Color(0xFF22D3EE)
+val AppRed = Color(0xFFDC2626)
+val AppRedBright = Color(0xFFF87171)

@@ -11,60 +11,59 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
-// ===========================================
-// MATTE DARK COLOR SCHEME
-// Deep, muted tones for a calm night mode
-// ===========================================
+// -------- APP DARK COLOR SCHEME --------
 private val DarkColorScheme = darkColorScheme(
-    primary = MatteDustyBlueDark,
-    onPrimary = MatteNightText,
-    primaryContainer = MatteNightBorder,
-    onPrimaryContainer = MatteNightText,
-    secondary = MatteTaupeLight,
-    onSecondary = MatteNightSurface,
-    secondaryContainer = MatteNightBorder,
-    onSecondaryContainer = MatteNightText,
-    tertiary = MatteSageDark,
-    onTertiary = MatteNightSurface,
-    background = MatteNightSurface,
-    onBackground = MatteNightText,
-    surface = MatteNightCard,
-    onSurface = MatteNightText,
-    surfaceVariant = MatteNightBorder,
-    onSurfaceVariant = MatteNightMuted,
-    outline = MatteNightBorder,
-    outlineVariant = Color(0xFF48484A)
+    primary = AppBlueBright,
+    onPrimary = AppCanvasDark,
+    primaryContainer = AppBlueContainerDark,
+    onPrimaryContainer = AppTextStrongDark,
+    secondary = AppAmberBright,
+    onSecondary = AppCanvasDark,
+    secondaryContainer = AppAmberContainerDark,
+    onSecondaryContainer = AppTextStrongDark,
+    tertiary = AppGreenBright,
+    onTertiary = AppCanvasDark,
+    tertiaryContainer = AppGreenContainerDark,
+    onTertiaryContainer = AppTextStrongDark,
+    background = AppCanvasDark,
+    onBackground = AppTextStrongDark,
+    surface = AppSurfaceDark,
+    onSurface = AppTextStrongDark,
+    surfaceVariant = AppSurfaceVariantDark,
+    onSurfaceVariant = AppTextMutedDark,
+    outline = AppOutlineDark,
+    outlineVariant = Color(0xFF4B5568)
 )
 
-// -------- MATTE LIGHT COLOR SCHEME --------
+// -------- APP LIGHT COLOR SCHEME --------
 private val LightColorScheme = lightColorScheme(
-    primary = MatteDustyBlueLight,
-    onPrimary = MatteWhite,
-    primaryContainer = MatteDustyBlueSubtle,
-    onPrimaryContainer = MatteCharcoal,
-    secondary = MatteTaupe,
-    onSecondary = MatteWhite,
-    secondaryContainer = MatteTaupeSubtle,
-    onSecondaryContainer = MatteCharcoal,
-    tertiary = MatteSageLight,
-    onTertiary = MatteWhite,
-    tertiaryContainer = MatteSageSubtle,
-    onTertiaryContainer = MatteCharcoal,
-    background = MatteWhite,
-    onBackground = MatteCharcoal,
-    surface = MatteCream,
-    onSurface = MatteCharcoal,
-    surfaceVariant = MatteStone,
-    onSurfaceVariant = MatteSlate,
-    outline = MattePebble,
-    outlineVariant = MatteStone
+    primary = AppBlue,
+    onPrimary = Color.White,
+    primaryContainer = AppBlueContainer,
+    onPrimaryContainer = AppTextStrongLight,
+    secondary = AppAmber,
+    onSecondary = Color.White,
+    secondaryContainer = AppAmberContainer,
+    onSecondaryContainer = AppTextStrongLight,
+    tertiary = AppGreen,
+    onTertiary = Color.White,
+    tertiaryContainer = AppGreenContainer,
+    onTertiaryContainer = AppTextStrongLight,
+    background = AppCanvasLight,
+    onBackground = AppTextStrongLight,
+    surface = AppSurfaceLight,
+    onSurface = AppTextStrongLight,
+    surfaceVariant = AppSurfaceVariantLight,
+    onSurfaceVariant = AppTextMutedLight,
+    outline = AppOutlineLight,
+    outlineVariant = AppSurfaceVariantLight
 )
 
 @Composable
 fun CollegeTimeTableTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = false, // Disabled to use our custom matte theme
+    dynamicColor: Boolean = false, // Disabled to use the custom app theme
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

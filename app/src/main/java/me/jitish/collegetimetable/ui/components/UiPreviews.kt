@@ -2,20 +2,27 @@ package me.jitish.collegetimetable.ui.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import me.jitish.collegetimetable.TimetableScreen
 import me.jitish.collegetimetable.data.ClassInfo
 import me.jitish.collegetimetable.data.Person
 import me.jitish.collegetimetable.data.TimetableData
+import me.jitish.collegetimetable.data.TimetableProfile
+import me.jitish.collegetimetable.ui.screens.FullTimetableScreen
+import me.jitish.collegetimetable.ui.screens.PeopleManagementScreen
+import me.jitish.collegetimetable.ui.screens.TimetableScreen
 import me.jitish.collegetimetable.ui.theme.CollegeTimeTableTheme
-import me.jitish.collegetimetable.ui.theme.MatteSageDark
-import me.jitish.collegetimetable.ui.theme.MatteSageLight
+import me.jitish.collegetimetable.ui.theme.AppGreenBright
+import me.jitish.collegetimetable.ui.theme.AppGreen
 import me.jitish.collegetimetable.viewmodel.ClassState
 import me.jitish.collegetimetable.viewmodel.TimetableUiState
 
-// Sample data for previews
-private val samplePeople = listOf(
-    Person("Jitish", "Jitish.json"),
-    Person("Utkarsh", "Utkarsh.json")
+private val samplePerson = Person(
+    id = "jitish",
+    name = "Jitish"
+)
+
+private val sampleOtherPerson = Person(
+    id = "utkarsh",
+    name = "Utkarsh"
 )
 
 private val sampleCurrentClass = ClassInfo(
@@ -64,22 +71,8 @@ private val sampleMondayClasses = listOf(
         end = "09:30",
         venue = "AB-302"
     ),
-    ClassInfo(
-        slot = "B11",
-        courseCode = "ECE2002",
-        courseTitle = "Digital Logic Design",
-        start = "10:05",
-        end = "11:35",
-        venue = "AB-414"
-    ),
-    ClassInfo(
-        slot = "C11",
-        courseCode = "MAT3002",
-        courseTitle = "Applied Linear Algebra",
-        start = "11:40",
-        end = "13:10",
-        venue = "AB-126"
-    )
+    sampleCurrentClass,
+    sampleUpcomingClass
 )
 
 private val sampleTuesdayClasses = listOf(
@@ -120,6 +113,19 @@ private val sampleTimetable = TimetableData(
     )
 )
 
+private val sampleProfiles = listOf(
+    TimetableProfile(
+        person = samplePerson,
+        timetable = sampleTimetable
+    ),
+    TimetableProfile(
+        person = sampleOtherPerson,
+        timetable = TimetableData(
+            mapOf("FRIDAY" to sampleRemainingClasses)
+        )
+    )
+)
+
 @Preview(
     name = "Light Mode - Current Class Running",
     showBackground = true,
@@ -130,8 +136,9 @@ fun TimetableScreenPreviewLightCurrentClass() {
     CollegeTimeTableTheme(darkTheme = false) {
         TimetableScreen(
             uiState = TimetableUiState(
-                people = samplePeople,
-                selectedPerson = samplePeople[0],
+                profiles = sampleProfiles,
+                selectedPersonId = samplePerson.id,
+                timetable = sampleTimetable,
                 classState = ClassState(
                     currentClass = sampleCurrentClass,
                     upcomingClass = sampleUpcomingClass,
@@ -149,7 +156,7 @@ fun TimetableScreenPreviewLightCurrentClass() {
 }
 
 @Preview(
-    name = "Dark Mode (Midnight) - Current Class Running",
+    name = "Dark Mode - Current Class Running",
     showBackground = true,
     showSystemUi = true
 )
@@ -158,8 +165,9 @@ fun TimetableScreenPreviewDarkCurrentClass() {
     CollegeTimeTableTheme(darkTheme = true) {
         TimetableScreen(
             uiState = TimetableUiState(
-                people = samplePeople,
-                selectedPerson = samplePeople[0],
+                profiles = sampleProfiles,
+                selectedPersonId = samplePerson.id,
+                timetable = sampleTimetable,
                 classState = ClassState(
                     currentClass = sampleCurrentClass,
                     upcomingClass = sampleUpcomingClass,
@@ -186,8 +194,9 @@ fun TimetableScreenPreviewLightUpcomingClass() {
     CollegeTimeTableTheme(darkTheme = false) {
         TimetableScreen(
             uiState = TimetableUiState(
-                people = samplePeople,
-                selectedPerson = samplePeople[1],
+                profiles = sampleProfiles,
+                selectedPersonId = sampleOtherPerson.id,
+                timetable = sampleTimetable,
                 classState = ClassState(
                     currentClass = null,
                     upcomingClass = sampleUpcomingClass,
@@ -205,72 +214,19 @@ fun TimetableScreenPreviewLightUpcomingClass() {
 }
 
 @Preview(
-    name = "Dark Mode (Midnight) - Upcoming Class",
+    name = "Light Mode - Empty Timetable",
     showBackground = true,
     showSystemUi = true
 )
 @Composable
-fun TimetableScreenPreviewDarkUpcomingClass() {
-    CollegeTimeTableTheme(darkTheme = true) {
-        TimetableScreen(
-            uiState = TimetableUiState(
-                people = samplePeople,
-                selectedPerson = samplePeople[1],
-                classState = ClassState(
-                    currentClass = null,
-                    upcomingClass = sampleUpcomingClass,
-                    remainingClasses = sampleRemainingClasses,
-                    upcomingClassStartsIn = 7200,
-                    isClassRunning = false
-                ),
-                isDarkMode = true,
-                isLoading = false
-            ),
-            onPersonSelected = {},
-            onToggleDarkMode = {}
-        )
-    }
-}
-
-@Preview(
-    name = "Light Mode - No Classes",
-    showBackground = true,
-    showSystemUi = true
-)
-@Composable
-fun TimetableScreenPreviewNoClasses() {
+fun TimetableScreenPreviewEmpty() {
     CollegeTimeTableTheme(darkTheme = false) {
         TimetableScreen(
             uiState = TimetableUiState(
-                people = samplePeople,
-                selectedPerson = samplePeople[0],
-                classState = ClassState(
-                    currentClass = null,
-                    upcomingClass = null,
-                    isClassRunning = false
-                ),
+                profiles = sampleProfiles,
+                selectedPersonId = samplePerson.id,
+                timetable = TimetableData(),
                 isDarkMode = false,
-                isLoading = false
-            ),
-            onPersonSelected = {},
-            onToggleDarkMode = {}
-        )
-    }
-}
-
-@Preview(
-    name = "Dark Mode (Midnight) - No Person Selected",
-    showBackground = true,
-    showSystemUi = true
-)
-@Composable
-fun TimetableScreenPreviewNoPersonSelected() {
-    CollegeTimeTableTheme(darkTheme = true) {
-        TimetableScreen(
-            uiState = TimetableUiState(
-                people = samplePeople,
-                selectedPerson = null,
-                isDarkMode = true,
                 isLoading = false
             ),
             onPersonSelected = {},
@@ -289,8 +245,9 @@ fun TimetableScreenPreviewLoading() {
     CollegeTimeTableTheme(darkTheme = false) {
         TimetableScreen(
             uiState = TimetableUiState(
-                people = emptyList(),
-                selectedPerson = null,
+                profiles = sampleProfiles,
+                selectedPersonId = samplePerson.id,
+                timetable = TimetableData(),
                 isDarkMode = false,
                 isLoading = true
             ),
@@ -309,10 +266,13 @@ fun TimetableScreenPreviewLoading() {
 private fun FullTimetableScreenPreviewLight() {
     CollegeTimeTableTheme(darkTheme = false) {
         FullTimetableScreen(
-            personName = "Jitish",
+            personName = samplePerson.name,
             timetable = sampleTimetable,
             isDarkMode = false,
-            onBackClick = {}
+            onBackClick = {},
+            onAddClasses = {},
+            onUpdateClassSchedule = { _, _, _ -> },
+            onDeleteClass = { _, _ -> }
         )
     }
 }
@@ -326,27 +286,53 @@ private fun FullTimetableScreenPreviewLight() {
 private fun FullTimetableScreenPreviewDark() {
     CollegeTimeTableTheme(darkTheme = true) {
         FullTimetableScreen(
-            personName = "Jitish",
+            personName = samplePerson.name,
             timetable = sampleTimetable,
             isDarkMode = true,
-            onBackClick = {}
+            onBackClick = {},
+            onAddClasses = {},
+            onUpdateClassSchedule = { _, _, _ -> },
+            onDeleteClass = { _, _ -> }
         )
     }
 }
 
 @Preview(
-    name = "Full Timetable - No Data",
+    name = "Full Timetable - Empty",
     showBackground = true,
     showSystemUi = true
 )
 @Composable
-private fun FullTimetableScreenPreviewNoData() {
+private fun FullTimetableScreenPreviewEmpty() {
     CollegeTimeTableTheme(darkTheme = false) {
         FullTimetableScreen(
-            personName = "Jitish",
-            timetable = null,
+            personName = samplePerson.name,
+            timetable = TimetableData(),
             isDarkMode = false,
-            onBackClick = {}
+            onBackClick = {},
+            onAddClasses = {},
+            onUpdateClassSchedule = { _, _, _ -> },
+            onDeleteClass = { _, _ -> }
+        )
+    }
+}
+
+@Preview(
+    name = "People Management - Light Mode",
+    showBackground = true,
+    showSystemUi = true
+)
+@Composable
+private fun PeopleManagementScreenPreviewLight() {
+    CollegeTimeTableTheme(darkTheme = false) {
+        PeopleManagementScreen(
+            profiles = sampleProfiles,
+            selectedPersonId = samplePerson.id,
+            onBackClick = {},
+            onSelectPerson = {},
+            onAddPerson = {},
+            onRenamePerson = { _, _ -> },
+            onDeletePerson = {}
         )
     }
 }
@@ -392,7 +378,7 @@ private fun ClassItemRowPreviewLight() {
         ClassItemRow(
             classInfo = sampleMondayClasses[0],
             isDarkMode = false,
-            accentColor = MatteSageLight
+            accentColor = AppGreen
         )
     }
 }
@@ -408,7 +394,7 @@ private fun ClassItemRowPreviewDark() {
         ClassItemRow(
             classInfo = sampleMondayClasses[1],
             isDarkMode = true,
-            accentColor = MatteSageDark
+            accentColor = AppGreenBright
         )
     }
 }

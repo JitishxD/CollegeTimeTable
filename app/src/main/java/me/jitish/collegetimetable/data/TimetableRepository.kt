@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.google.gson.Gson
-import java.io.InputStreamReader
+import java.util.UUID
 
-class TimetableRepository(private val context: Context) {
+class TimetableRepository(context: Context) {
 
     private val gson = Gson()
 
@@ -14,38 +14,39 @@ class TimetableRepository(private val context: Context) {
         PREFS_NAME, Context.MODE_PRIVATE
     )
 
-    // List of known timetable files - add new people here
-    private val knownTimetableFiles = listOf("Jitish.json", "Utkarsh.json", "Rahul.json", "Tanush.json")
+    fun loadStore(): TimetableStore {
+        val storeJson = prefs.getString(KEY_TIMETABLE_STORE, null)
+        if (storeJson != null) {
+            return try {
+                sanitizeStore(gson.fromJson(storeJson, TimetableStore::class.java) ?: TimetableStore())
+            } catch (e: Exception) {
+                e.printStackTrace()
+                defaultStore()
+            }
+        }
 
-    fun getAvailablePeople(): List<Person> {
-        return knownTimetableFiles
-            .filter { fileName ->
-                // Verify the file actually exists in assets
-                try {
-                    context.assets.open(fileName).close()
-                    true
-                } catch (_: Exception) {
-                    false
-                }
-            }
-            .map { fileName ->
-                Person(
-                    name = fileName.removeSuffix(".json"),
-                    fileName = fileName
-                )
-            }
+        val migratedTimetable = loadLegacyTimetable()
+        return sanitizeStore(
+            TimetableStore(
+                profiles = listOf(defaultProfile(migratedTimetable)),
+                selectedPersonId = null
+            )
+        )
     }
 
-    fun loadTimetable(fileName: String): TimetableData? {
+    fun saveStore(store: TimetableStore) {
+        prefs.edit {
+            putString(KEY_TIMETABLE_STORE, gson.toJson(sanitizeStore(store)))
+        }
+    }
+
+    private fun loadLegacyTimetable(): TimetableData {
+        val timetableJson = prefs.getString(KEY_TIMETABLE, null) ?: return TimetableData()
         return try {
-            val inputStream = context.assets.open(fileName)
-            val reader = InputStreamReader(inputStream)
-            gson.fromJson(reader, TimetableData::class.java).also {
-                reader.close()
-            }
+            sanitizeTimetable(gson.fromJson(timetableJson, TimetableData::class.java) ?: TimetableData())
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            TimetableData()
         }
     }
 
@@ -65,8 +66,83 @@ class TimetableRepository(private val context: Context) {
         prefs.edit { putBoolean(KEY_24_HOUR_FORMAT, is24Hour) }
     }
 
+    private fun sanitizeStore(store: TimetableStore): TimetableStore {
+        val sanitizedProfiles = store.profiles
+            .mapNotNull { profile ->
+                val person = runCatching { profile.person }.getOrNull() ?: return@mapNotNull null
+                val personId: String = person.id
+                val personName: String = person.name
+                val cleanName = personName.trim()
+
+                if (cleanName.isBlank()) return@mapNotNull null
+
+                TimetableProfile(
+                    person = Person(
+                        id = if (personId.isNullOrBlank()) UUID.randomUUID().toString() else personId,
+                        name = cleanName
+                    ),
+                    timetable = sanitizeTimetable(runCatching { profile.timetable }.getOrNull() ?: TimetableData())
+                )
+            }
+            .distinctBy { it.person.id }
+            .ifEmpty { listOf(defaultProfile()) }
+
+        val selectedId = store.selectedPersonId
+            ?.takeIf { id -> sanitizedProfiles.any { it.person.id == id } }
+            ?: sanitizedProfiles.first().person.id
+
+        return TimetableStore(
+            profiles = sanitizedProfiles,
+            selectedPersonId = selectedId
+        )
+    }
+
+    private fun sanitizeTimetable(timetable: TimetableData): TimetableData {
+        val sanitized = TIMETABLE_DAYS.mapNotNull { day ->
+            val classMap = runCatching { timetable.timetable }.getOrNull().orEmpty()
+            val classes = classMap[day]
+                .orEmpty()
+                .map { classInfo ->
+                    val classId: String = classInfo.id
+                    classInfo.copy(
+                        slot = classInfo.slot.trim().uppercase(),
+                        courseCode = classInfo.courseCode.trim(),
+                        courseTitle = classInfo.courseTitle.trim(),
+                        start = classInfo.start.trim(),
+                        end = classInfo.end.trim(),
+                        venue = classInfo.venue.trim(),
+                        facultyName = classInfo.facultyName.trim(),
+                        id = if (classId.isBlank()) UUID.randomUUID().toString() else classId
+                    )
+                }
+                .filter { it.courseTitle.isNotBlank() && it.start.isNotBlank() && it.end.isNotBlank() }
+                .sortedBy { it.start }
+
+            if (classes.isEmpty()) null else day to classes
+        }.toMap()
+
+        return TimetableData(sanitized)
+    }
+
+    private fun defaultStore(): TimetableStore {
+        val profile = defaultProfile()
+        return TimetableStore(
+            profiles = listOf(profile),
+            selectedPersonId = profile.person.id
+        )
+    }
+
+    private fun defaultProfile(timetable: TimetableData = TimetableData()): TimetableProfile {
+        return TimetableProfile(
+            person = Person(name = "My Timetable"),
+            timetable = sanitizeTimetable(timetable)
+        )
+    }
+
     companion object {
         private const val PREFS_NAME = "timetable_prefs"
+        private const val KEY_TIMETABLE_STORE = "user_timetable_store"
+        private const val KEY_TIMETABLE = "user_timetable"
         private const val KEY_DARK_MODE = "dark_mode"
         private const val KEY_24_HOUR_FORMAT = "is_24_hour_format"
     }
