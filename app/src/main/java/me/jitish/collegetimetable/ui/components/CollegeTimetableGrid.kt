@@ -59,8 +59,8 @@ import me.jitish.collegetimetable.utils.COLLEGE_SLOT_GRID
 
 private val DayColumnWidth = 72.dp
 private val SlotColumnWidth = 148.dp
-private val HeaderHeight = 42.dp
-private val RowHeight = 92.dp
+private val HeaderHeight = 54.dp
+private val RowHeight = 128.dp
 private val GridContentWidth = DayColumnWidth + SlotColumnWidth * COLLEGE_SLOT_COLUMNS.size
 private val GridContentHeight = HeaderHeight + RowHeight * COLLEGE_SLOT_GRID.size
 private const val DefaultGridScale = 0.8f
@@ -192,7 +192,7 @@ private fun CollegeTimetableGridContent(
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
-                        maxLines = 1,
+                        maxLines = 2,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
