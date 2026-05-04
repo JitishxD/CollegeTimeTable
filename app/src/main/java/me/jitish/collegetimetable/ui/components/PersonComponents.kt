@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ManageAccounts
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
@@ -109,7 +108,7 @@ fun PersonNameDialog(
     var name by remember(initialName) { mutableStateOf(TextFieldValue(initialName)) }
     val cleanName = name.text.trim()
 
-    AlertDialog(
+    PreviewableAlertDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
@@ -150,7 +149,7 @@ fun ConfirmDeletePersonDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit
 ) {
-    AlertDialog(
+    PreviewableAlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("Delete ${person.name}?") },
         text = { Text("This will remove that person's saved timetable.") },

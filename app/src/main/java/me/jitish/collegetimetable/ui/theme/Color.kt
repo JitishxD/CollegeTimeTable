@@ -2,50 +2,45 @@ package me.jitish.collegetimetable.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// -------- APP DESIGN PALETTE --------
+val AppCanvasLight = Color(0xFFFAFAF9) // MatteWhite
+val AppSurfaceLight = Color(0xFFF5F4F0) // MatteCream
+val AppSurfaceVariantLight = Color(0xFFE8E6E1) // MatteStone
+val AppOutlineLight = Color(0xFFD4D2CD) // MattePebble
+val AppTextMutedLight = Color(0xFF9C9A94) // MatteSlate
+val AppTextStrongLight = Color(0xFF52504A) // MatteCharcoal
 
-// Neutral base colors - light theme
-val AppCanvasLight = Color(0xFFFAF6EE)
-val AppSurfaceLight = Color(0xFFF3EEE4)
-val AppSurfaceVariantLight = Color(0xFFE7DFD1)
-val AppOutlineLight = Color(0xFFD5CABC)
-val AppTextMutedLight = Color(0xFF746B60)
-val AppTextStrongLight = Color(0xFF1F2937)
+val AppCanvasDark = Color(0xFF1C1C1E) // MatteNightSurface
+val AppSurfaceDark = Color(0xFF2C2C2E) // MatteNightCard
+val AppSurfaceVariantDark = Color(0xFF3A3A3C) // MatteNightBorder
+val AppOutlineDark = Color(0xFF3A3A3C) // MatteNightBorder
+val AppTextMutedDark = Color(0xFF8E8E93) // MatteNightMuted
+val AppTextStrongDark = Color(0xFFE5E5E7) // MatteNightText
 
-// Neutral base colors - dark theme
-val AppCanvasDark = Color(0xFF111318)
-val AppSurfaceDark = Color(0xFF1C2027)
-val AppSurfaceVariantDark = Color(0xFF252B34)
-val AppOutlineDark = Color(0xFF3A424D)
-val AppTextMutedDark = Color(0xFFA4ADBA)
-val AppTextStrongDark = Color(0xFFF1F5F9)
+val AppBlue = Color(0xFF7A9BB5) // MatteDustyBlueLight
+val AppBlueBright = Color(0xFF8FAEC4) // MatteDustyBlueDark
+val AppBlueSoft = Color(0xFFE6EEF4) // MatteDustyBlueSubtle
+val AppBlueSoftDark = Color(0xFF24323D) // MatteDustyBlueDark
+val AppBlueContainer = Color(0xFFE6EEF4) // MatteDustyBlueSubtle
+val AppBlueContainerDark = Color(0xFF344C5D) // MatteDustyBlueDark
 
-// Saturated accents
-val AppBlue = Color(0xFF3B6EA8)
-val AppBlueBright = Color(0xFF8AB4E6)
-val AppBlueSoft = Color(0xFFF5F8FC)
-val AppBlueSoftDark = Color(0xFF1A2432)
-val AppBlueContainer = Color(0xFFDBEAFE)
-val AppBlueContainerDark = Color(0xFF27364D)
+val AppGreen = Color(0xFF8BA888) // MatteSageLight
+val AppGreenBright = Color(0xFF9CB699) // MatteSageDark
+val AppGreenSoft = Color(0xFFE8EFE7) // MatteSageSubtle
+val AppGreenSoftDark = Color(0xFF26362B) // MatteSageDark
+val AppGreenContainer = Color(0xFFE8EFE7) // MatteSageSubtle
+val AppGreenContainerDark = Color(0xFF2D3E32) // MatteSageDark
 
-val AppGreen = Color(0xFF3A7A54)
-val AppGreenBright = Color(0xFF82C59B)
-val AppGreenSoft = Color(0xFFF6FAF7)
-val AppGreenSoftDark = Color(0xFF1A2720)
-val AppGreenContainer = Color(0xFFDCFCE7)
-val AppGreenContainerDark = Color(0xFF243B2D)
+val AppAmber = Color(0xFF9A8F85) // MatteTaupe
+val AppAmberBright = Color(0xFFBFB5AB) // MatteTaupeLight
+val AppAmberContainer = Color(0xFFF0ECE8) // MatteTaupeSubtle
+val AppAmberContainerDark = Color(0xFF3A3A3C) // MatteNightBorder
 
-val AppAmber = Color(0xFFB7792F)
-val AppAmberBright = Color(0xFFD8AA55)
-val AppAmberContainer = Color(0xFFFEF3C7)
-val AppAmberContainerDark = Color(0xFF4F3920)
+val AppCoral = Color(0xFFBFA094) // MatteTerracotta
+val AppCoralBright = Color(0xFFBFA094) // MatteTerracotta
 
-val AppCoral = Color(0xFFC64A61)
-val AppCoralBright = Color(0xFFE58B9A)
-
-val AppPurple = Color(0xFF7A63B3)
-val AppPurpleBright = Color(0xFFB39DDB)
-val AppCyan = Color(0xFF3E8EA3)
-val AppCyanBright = Color(0xFF7CC6D6)
-val AppRed = Color(0xFFC94B4B)
-val AppRedBright = Color(0xFFE28A8A)
+val AppPurple = Color(0xFF9A8F85) // MatteTaupe
+val AppPurpleBright = Color(0xFFBFB5AB) // MatteTaupeLight
+val AppCyan = Color(0xFF7A9BB5) // MatteDustyBlueLight
+val AppCyanBright = Color(0xFF8FAEC4) // MatteDustyBlueDark
+val AppRed = Color(0xFFBFA094) // MatteTerracotta
+val AppRedBright = Color(0xFFBFA094) // MatteTerracotta

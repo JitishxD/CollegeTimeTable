@@ -11,20 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
-// -------- APP DARK COLOR SCHEME --------
+// -------- MATTE DARK COLOR SCHEME --------
 private val DarkColorScheme = darkColorScheme(
     primary = AppBlueBright,
-    onPrimary = AppCanvasDark,
-    primaryContainer = AppBlueContainerDark,
+    onPrimary = AppTextStrongDark,
+    primaryContainer = AppOutlineDark,
     onPrimaryContainer = AppTextStrongDark,
     secondary = AppAmberBright,
     onSecondary = AppCanvasDark,
-    secondaryContainer = AppAmberContainerDark,
+    secondaryContainer = AppOutlineDark,
     onSecondaryContainer = AppTextStrongDark,
     tertiary = AppGreenBright,
     onTertiary = AppCanvasDark,
-    tertiaryContainer = AppGreenContainerDark,
-    onTertiaryContainer = AppTextStrongDark,
     background = AppCanvasDark,
     onBackground = AppTextStrongDark,
     surface = AppSurfaceDark,
@@ -32,21 +30,21 @@ private val DarkColorScheme = darkColorScheme(
     surfaceVariant = AppSurfaceVariantDark,
     onSurfaceVariant = AppTextMutedDark,
     outline = AppOutlineDark,
-    outlineVariant = Color(0xFF4B5568)
+    outlineVariant = Color(0xFF48484A)
 )
 
-// -------- APP LIGHT COLOR SCHEME --------
+// -------- MATTE LIGHT COLOR SCHEME --------
 private val LightColorScheme = lightColorScheme(
     primary = AppBlue,
-    onPrimary = Color.White,
+    onPrimary = AppCanvasLight,
     primaryContainer = AppBlueContainer,
     onPrimaryContainer = AppTextStrongLight,
     secondary = AppAmber,
-    onSecondary = Color.White,
+    onSecondary = AppCanvasLight,
     secondaryContainer = AppAmberContainer,
     onSecondaryContainer = AppTextStrongLight,
     tertiary = AppGreen,
-    onTertiary = Color.White,
+    onTertiary = AppCanvasLight,
     tertiaryContainer = AppGreenContainer,
     onTertiaryContainer = AppTextStrongLight,
     background = AppCanvasLight,

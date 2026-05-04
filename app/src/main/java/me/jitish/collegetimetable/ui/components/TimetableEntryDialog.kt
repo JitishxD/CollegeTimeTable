@@ -10,7 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -137,7 +136,7 @@ fun TimetableEntryDialog(
         ScheduleEntryMode.Normal -> manualSlot.isNotBlank() && startTime.isNotBlank() && endTime.isNotBlank()
     }
 
-    AlertDialog(
+    PreviewableAlertDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(if (initialClassInfo == null) "Add schedule entry" else "Edit schedule entry")
@@ -449,7 +448,7 @@ fun ConfirmDeleteEntryDialog(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit
 ) {
-    AlertDialog(
+    PreviewableAlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("Delete entry?") },
         text = {

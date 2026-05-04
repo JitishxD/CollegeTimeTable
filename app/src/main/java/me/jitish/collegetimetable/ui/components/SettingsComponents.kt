@@ -13,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Nightlight
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.WbSunny
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -98,7 +97,7 @@ fun SettingsDialog(
 ) {
     if (!showDialog) return
 
-    AlertDialog(
+    PreviewableAlertDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
